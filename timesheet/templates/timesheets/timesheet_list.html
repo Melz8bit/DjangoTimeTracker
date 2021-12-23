@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'table-style.css' %}" />
+
+<form method="GET">
+    {{ my_filter.form }}
+    <button class='btn' type='submit'>Filter</button>
+</form>
+
+<table>
+    <tr id="table-header">
+        <th>Date Worked</th>
+        <th>Hospital Name</th>
+        <th>Clock In</th>
+        <th>Clock Out (Lunch)</th>
+        <th>Clock In (Lunch)</th>
+        <th>Clock Out</th>
+        <th>Hours Worked</th>
+        <th>Hourly Rate</th>
+        <th>Bonus Amount</th>
+        <th>Total Earned</th>
+    </tr>
+
+    <tr id="table-data">
+        {% for instance in object_list %}
+        <td><a href='{{ instance.get_absolute_url }}'>{{instance.date_worked}}</a></td>
+        <td>{{ instance.hospital_name }}</td>
+        <td>{{ instance.clock_in | time:"g:i A" }}</td>
+        <td>
+            {% if instance.clock_out_lunch %}
+            {{ instance.clock_out_lunch | time:"g:i A" }}
+            {% else %}
+            -
+            {% endif %}
+        </td>
+        <td>
+            {% if instance.clock_in_lunch %}
+            {{ instance.clock_in_lunch | time:"g:i A" }}
+            {% else %}
+            -
+            {% endif %}
+        </td>
+        <td>{{ instance.clock_out | time:"g:i A" }}</td>
+        <td>{{ instance.total_hours_worked }}</td>
+        <td>$ {{ instance.hourly_rate }}</td>
+        <td>$ {{ instance.bonus_amount }}</td>
+        <td>$ {{ instance.get_daily_total_earned }}</td>
+    </tr>
+    {% endfor %}
+</table>
+
+
+{% endblock %}

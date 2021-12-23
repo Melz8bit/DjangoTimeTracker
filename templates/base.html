@@ -1,0 +1,30 @@
+<html>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'style.css' %}"/>
+<head>
+    <h1 ><a href="{% url 'home' %}">Time Tracker</a></h1>
+    {% if user.is_authenticated %}
+    <div id="add-time-hospital">
+        {% url 'timesheet:timesheet-create' as create_url %}
+        {% if request.path != create_url %}
+        <a href="{% url 'timesheet:timesheet-create' %}">Add New Time</a>
+        {% endif %}
+        &nbsp;&nbsp;&nbsp;&nbsp;<a href="{% url 'hospitals:hospital-create' %}">Add New Hospital</a>
+    </div>
+    <div id="user-info">{{ request.user.first_name }}
+        <a href="{% url 'logout' %}">Logout</a>
+    </div>
+    {% endif %}
+
+</head>
+
+<body>
+    <hr>
+    <p>
+        {% block content %}
+        Replacement text
+        {% endblock %}
+    </p>
+</body>
+
+</html>

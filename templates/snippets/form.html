@@ -1,0 +1,18 @@
+<form method='POST' action="." enctype="multipart/form-data">{% csrf_token %}
+
+    {{ form.as_p }}
+
+    <button type='submit' class='{{ btn_class }}'>
+        {% if submit_btn %}
+        {{ submit_btn }}
+        {% else %}
+        Submit
+        {% endif %}
+    </button>
+    {% url 'register_page' as register_url %}
+
+    {% if not user.is_authenticated and register_url != request.path %}
+    <a href="{% url 'register-page' %}">Register New Account</a>
+    {% endif %}
+
+</form>

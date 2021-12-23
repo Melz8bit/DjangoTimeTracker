@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<form action='.' method='POST'> {% csrf_token %}
+    {{ form.as_p }}
+    {{ form.create_invoice_number.as_hidden }}
+    <input type='submit' value='View Invoice'>
+</form>
+
+{% endblock %}

@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Daily Report</h2>
+<p><strong>Date Worked:</strong> {{ object.date_worked }}</p>
+<p><strong>Hospital Name:</strong> {{object.hospital_name }}&emsp;
+    <strong>Hourly Rate:</strong> ${{ object.hourly_rate}}
+</p>
+<p><strong>Clock in:</strong> {{ object.clock_in }}</p>
+<p><strong>Clock out (lunch):</strong>
+    {% if object.clock_out_lunch %}
+    {{ object.clock_out_lunch }}
+    {% else %}
+    N/A
+    {% endif %} </p>
+<p><strong>Clock in (lunch):</strong>
+    {% if object.clock_in_lunch %}
+    {{ object.clock_in_lunch }}
+    {% else %}
+    N/A
+    {% endif %} </p>
+<p><strong>Clock out:</strong> {{ object.clock_out }}</p>
+<p><strong>Bonus amount:</strong> ${{ object.bonus_amount }}</p>
+<p><strong>Total hours worked:</strong> {{ object.get_hours_worked }} ({{object.total_hours_worked }})</p>
+<p><strong>Total amount earned: </strong> ${{ object.get_daily_total_earned }} </p>
+
+<a href='{{ request.path }}update'>Edit</a>
+{% endblock %}

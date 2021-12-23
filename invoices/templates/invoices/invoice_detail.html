@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<h2>Invoice Detail Report</h2>
+<h3>{{object.hospital_name}}</h3>
+Invoice Number: {{ object.invoice_number }}
+<link rel="stylesheet" href="{% static 'table-style.css' %}" />
+<table>
+    <tr id="table-header">
+        <th>Date</th>
+        <th>Time In</th>
+        <th>Lunch Out</th>
+        <th>Lunch In</th>
+        <th>Time Out</th>
+        <th>Hours Worked</th>
+        <th> Hourly Rate</th>
+        <th>Bonus</th>
+        <th>Daily Total</th>
+    </tr>
+
+    <tr id="table-data">
+        {% for instance in object_list %}
+        <td>{{ instance.date_worked }}</td>
+        <td>{{ instance.clock_in | time:"g:i A" }}</td>
+        <td>
+            {% if instance.clock_out_lunch %}
+            {{ instance.clock_out_lunch | time:"g:i A" }}
+            {% else %}
+            -
+            {% endif %}
+        </td>
+        <td>
+            {% if instance.clock_in_lunch %}
+            {{ instance.clock_in_lunch | time:"g:i A" }}
+            {% else %}
+            -
+            {% endif %}
+        </td>
+        <td>{{ instance.clock_out | time:"g:i A" }}</td>
+        <td>{{ instance.get_hours_worked }}</td>
+        <td>$ {{ instance.hourly_rate }}</td>
+        <td>$ {{ instance.bonus_amount }}</td>
+        <td>$ {{ instance.get_daily_total_earned }}</td>
+    </tr>
+    {% endfor %}
+</table>
+
+<p>Invoice total: $ {{ invoice_total }}
+
+</p>
+<a href='{{ request.path }}update'>Edit</a>
+<a href='{{ request.path }}invoice_pdf'>Print</a>
+
+{% endblock %}

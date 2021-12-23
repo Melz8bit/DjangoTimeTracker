@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% for instance in object_list %}
+{% if instance.username == request.user %}
+<p><a href='{{ instance.get_absolute_url }}'>{{instance.name}}</a></p>
+{% endif %}
+{% endfor %}
+
+{% endblock %}

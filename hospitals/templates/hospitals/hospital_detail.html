@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>{{ object.name }}</h2>
+<p>Address: {{object.address }}</p>
+<p>City: {{object.city }}&emsp;State: {{object.state }}&emsp;Zip Code: {{object.zip_code }}</p>
+<p>Email: {{object.email }}</p>
+<p>Telephone: {{object.telephone }}</p>
+{% endblock %}
