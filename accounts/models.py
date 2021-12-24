@@ -10,6 +10,8 @@ STATE_CHOICES = [
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User, related_name="profile", unique=True, on_delete=models.CASCADE)
+    first_name = models.CharField(max_length=20, blank=True)
+    last_name = models.CharField(max_length=20, blank=True)
     company_name = models.CharField(max_length=100, blank=False)
     address = models.CharField(max_length=70)
     city = models.CharField(max_length=20)

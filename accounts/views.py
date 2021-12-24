@@ -1,8 +1,14 @@
 from django.contrib.auth import authenticate, login, logout, get_user_model
-from django.shortcuts import render, redirect
+from django.http.response import Http404, HttpResponseRedirect
+from django.shortcuts import get_object_or_404, render, redirect
 
 # Create your views here.
-from .forms import LoginForm, RegisterForm
+from django.views.generic import (
+    UpdateView,
+)
+
+from .forms import LoginForm, RegisterForm, UserInfoForm
+from .models import UserProfile
 
 User = get_user_model()
 
@@ -64,3 +70,24 @@ def logout_view(request):
     logout(request)
     # request.user == Anon user
     return redirect('/login')
+
+def update_user_view(request, username):
+    template_name = 'accounts/user_update.html'
+    
+    try:
+        instance = get_object_or_404(UserProfile, user__username=username)
+        form = UserInfoForm(request.POST or None, instance=instance)          
+                    
+        if form.is_valid():            
+            instance = form.save(commit=False)
+            instance.save()
+            
+            form = UserInfoForm()      
+        
+    except UserProfile.DoesNotExist:
+        raise Http404
+    
+    if request.method == 'GET':
+        return render(request, template_name, {'form': form}) 
+    else:
+        return HttpResponseRedirect('/')

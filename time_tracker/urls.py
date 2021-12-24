@@ -23,7 +23,7 @@ from timesheet.views import (
 from accounts.views import (
     login_view,
     logout_view,
-    register_view
+    register_view,
 )
 
 urlpatterns = [
@@ -35,4 +35,5 @@ urlpatterns = [
     path('hospitals/', include('hospitals.urls')),
     path('timesheet/', include('timesheet.urls')),
     path('invoice/', include('invoices.urls')),
+    path('account/', include('accounts.urls')),
 ]

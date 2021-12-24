@@ -1,5 +1,6 @@
 from django import forms
 from django.contrib.auth import get_user_model
+from .models import UserProfile
 
 User = get_user_model()
 
@@ -74,3 +75,20 @@ class LoginForm(forms.Form):
             raise forms.ValidationError('This username is not valid.')
         
         return username
+
+class UserInfoForm(forms.ModelForm):
+    class Meta:
+        email = forms.EmailField(required=False)
+
+        model = UserProfile
+        fields = [
+            'first_name',
+            'last_name',
+            'company_name',
+            'address',
+            'city',
+            'state',
+            'zip_code',
+            'email',
+            'telephone',
+        ]
